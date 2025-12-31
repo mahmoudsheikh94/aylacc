@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import About from '../components/About.astro';
+import FeaturedProjects from '../components/FeaturedProjects.astro';
+import Testimonials from '../components/Testimonials.astro';
+import FAQ from '../components/FAQ.astro';
+import Contact from '../components/Contact.astro';
+import { services, getServiceSchema } from '../data/services';
+
+const title = 'Ayla Construction LTD';
+const description = 'Professional construction services in the United Kingdom. Commercial buildings, residential projects, fit-outs, refurbishments, loft conversions, and extensions. Quality workmanship since 2021.';
+const siteUrl = 'https://aylacc.com';
+
+// LocalBusiness / ConstructionCompany schema for homepage
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['LocalBusiness', 'GeneralContractor'],
+  '@id': `${siteUrl}/#business`,
+  name: 'Ayla Construction LTD',
+  description: 'Professional construction company providing commercial and residential building services across the United Kingdom.',
+  url: siteUrl,
+  telephone: '+44-XXXX-XXXXXX', // PLACEHOLDER: Replace with actual phone
+  email: 'info@aylacc.com', // PLACEHOLDER: Replace with actual email
+  foundingDate: '2021',
+  founder: {
+    '@type': 'Person',
+    name: 'Malek Sheikh El Ard',
+    jobTitle: 'CEO & Founder',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'GB',
+    addressRegion: 'London',
+  },
+  areaServed: [
+    {
+      '@type': 'City',
+      name: 'London',
+    },
+    {
+      '@type': 'AdministrativeArea',
+      name: 'South East England',
+    },
+  ],
+  priceRange: '££',
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '08:00',
+      closes: '18:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Saturday',
+      opens: '09:00',
+      closes: '14:00',
+    },
+  ],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5',
+    reviewCount: '50',
+  },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Construction Services',
+    itemListElement: services.map((service, index) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: service.title,
+        description: service.description,
+      },
+      position: index + 1,
+    })),
+  },
+};
+
+// Service schemas for individual services
+const serviceSchemas = services.map(service => getServiceSchema(service, siteUrl));
+---
+
+<BaseLayout title={title} description={description}>
+  <Fragment slot="head">
+    <!-- LocalBusiness Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+
+    <!-- Service Schemas -->
+    {serviceSchemas.map(schema => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </Fragment>
+
+  <Header slot="header" currentPath="/" />
+
+  <!-- Homepage Sections -->
+  <Hero />
+  <Services />
+  <About />
+  <FeaturedProjects />
+  <Testimonials />
+  <FAQ />
+  <Contact />
+
+  <Footer slot="footer" />
+</BaseLayout>

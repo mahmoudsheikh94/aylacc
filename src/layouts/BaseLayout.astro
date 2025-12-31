@@ -1,0 +1,130 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  canonicalURL?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = '/og-image.jpg',
+  canonicalURL = Astro.url.href,
+  type = 'website',
+  noindex = false,
+} = Astro.props;
+
+const siteTitle = 'Ayla Construction LTD';
+const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
+const siteUrl = 'https://aylacc.com';
+
+// Organization structured data (appears on all pages)
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Ayla Construction LTD',
+  url: siteUrl,
+  logo: `${siteUrl}/logo.svg`,
+  description: 'Professional construction services in the United Kingdom. Commercial buildings, residential projects, fit-outs, refurbishments, loft conversions, and extensions.',
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'GB',
+    addressRegion: 'London',
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: '+44-XXXX-XXXXXX', // PLACEHOLDER: Replace with actual phone
+    contactType: 'customer service',
+    areaServed: 'GB',
+    availableLanguage: ['English'],
+  },
+  sameAs: [
+    // PLACEHOLDER: Add social media URLs
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Primary Meta Tags -->
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={description} />
+    <meta name="author" content="Ayla Construction LTD" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${siteUrl}${image}`} />
+    <meta property="og:site_name" content={siteTitle} />
+    <meta property="og:locale" content="en_GB" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${siteUrl}${image}`} />
+
+    <!-- Geo Tags for UK -->
+    <meta name="geo.region" content="GB" />
+    <meta name="geo.placename" content="United Kingdom" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#1E3A5F" />
+
+    <!-- Preload critical fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    </noscript>
+
+    <!-- Organization Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+
+    <!-- Additional structured data slot -->
+    <slot name="head" />
+  </head>
+  <body class="min-h-screen flex flex-col bg-light text-text">
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">
+      Skip to main content
+    </a>
+
+    <slot name="header" />
+
+    <main id="main-content" class="flex-grow">
+      <slot />
+    </main>
+
+    <slot name="footer" />
+  </body>
+</html>

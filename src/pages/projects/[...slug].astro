@@ -1,0 +1,266 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+
+const { title, description, category, location, completionDate, image, client, duration, value } = project.data;
+
+// Get related projects (same category, excluding current)
+const allProjects = await getCollection('projects');
+const relatedProjects = allProjects
+  .filter(p => p.data.category === category && p.slug !== project.slug)
+  .slice(0, 3);
+
+// Project structured data
+const projectSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  image: `https://aylacc.com${image}`,
+  author: {
+    '@type': 'Organization',
+    name: 'Ayla Construction LTD',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Ayla Construction LTD',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://aylacc.com/logo.svg',
+    },
+  },
+  datePublished: `${completionDate}-01-01`,
+};
+---
+
+<BaseLayout
+  title={`${title} | Projects`}
+  description={description}
+  image={image}
+  type="article"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(projectSchema)} />
+  </Fragment>
+
+  <Header slot="header" currentPath="/projects" />
+
+  <!-- Project Header -->
+  <section class="relative bg-charcoal py-20 lg:py-28 overflow-hidden">
+    <!-- Decorative Elements -->
+    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent"></div>
+    <div class="absolute top-20 right-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav class="mb-8" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-3 text-sm">
+          <li><a href="/" class="text-cream/50 hover:text-gold transition-colors">Home</a></li>
+          <li class="text-cream/30">/</li>
+          <li><a href="/projects" class="text-cream/50 hover:text-gold transition-colors">Projects</a></li>
+          <li class="text-cream/30">/</li>
+          <li class="text-gold">{title}</li>
+        </ol>
+      </nav>
+
+      <div class="max-w-4xl">
+        <span class="inline-block bg-gold text-charcoal text-xs font-medium px-4 py-2 tracking-wider uppercase mb-6">
+          {category}
+        </span>
+        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl text-white mb-6" style="animation: fadeInUp 0.8s ease-out 0.1s both;">
+          {title}
+        </h1>
+        <p class="text-lg text-cream/70 leading-relaxed mb-8" style="animation: fadeInUp 0.8s ease-out 0.2s both;">
+          {description}
+        </p>
+
+        <!-- Project Meta -->
+        <div class="flex flex-wrap gap-8 text-cream/60" style="animation: fadeInUp 0.8s ease-out 0.3s both;">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 border border-gold/30 flex items-center justify-center">
+              <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <span>{location}</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 border border-gold/30 flex items-center justify-center">
+              <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <span>Completed {completionDate}</span>
+          </div>
+          {duration && (
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 border border-gold/30 flex items-center justify-center">
+                <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <span>{duration}</span>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project Content -->
+  <section class="relative py-20 lg:py-28 bg-cream overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-3 gap-12 lg:gap-16">
+        <!-- Main Content -->
+        <div class="lg:col-span-2">
+          <!-- Project Main Image -->
+          <div class="aspect-video mb-12 overflow-hidden bg-charcoal" style="animation: fadeInUp 0.8s ease-out 0.4s both;">
+            <img
+              src={image}
+              alt={`${title} - ${category} project in ${location}`}
+              class="w-full h-full object-cover"
+              width="1200"
+              height="675"
+            />
+          </div>
+
+          <!-- Content -->
+          <article class="prose prose-lg max-w-none
+            prose-headings:font-display prose-headings:text-charcoal prose-headings:font-medium
+            prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:border-l-2 prose-h2:border-gold prose-h2:pl-4
+            prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-4
+            prose-p:text-charcoal/70 prose-p:leading-relaxed
+            prose-a:text-gold hover:prose-a:text-charcoal prose-a:no-underline
+            prose-strong:text-charcoal prose-strong:font-medium
+            prose-li:text-charcoal/70
+            prose-ul:my-6 prose-li:my-2"
+            style="animation: fadeInUp 0.8s ease-out 0.5s both;">
+            <Content />
+          </article>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-1">
+          <!-- Project Details Card -->
+          <div class="bg-charcoal p-8 sticky top-24 border border-gold/10" style="animation: slideInLeft 1s ease-out 0.6s both;">
+            <!-- Corner Accents -->
+            <div class="absolute top-0 left-0 w-8 h-8 border-t border-l border-gold/30"></div>
+            <div class="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-gold/30"></div>
+
+            <h2 class="font-display text-xl text-white mb-8">Project Details</h2>
+            <dl class="space-y-6">
+              <div>
+                <dt class="text-xs tracking-[0.15em] uppercase text-gold mb-2">Category</dt>
+                <dd class="text-cream">{category}</dd>
+              </div>
+              <div>
+                <dt class="text-xs tracking-[0.15em] uppercase text-gold mb-2">Location</dt>
+                <dd class="text-cream">{location}</dd>
+              </div>
+              <div>
+                <dt class="text-xs tracking-[0.15em] uppercase text-gold mb-2">Completion</dt>
+                <dd class="text-cream">{completionDate}</dd>
+              </div>
+              {duration && (
+                <div>
+                  <dt class="text-xs tracking-[0.15em] uppercase text-gold mb-2">Duration</dt>
+                  <dd class="text-cream">{duration}</dd>
+                </div>
+              )}
+              {client && (
+                <div>
+                  <dt class="text-xs tracking-[0.15em] uppercase text-gold mb-2">Client</dt>
+                  <dd class="text-cream">{client}</dd>
+                </div>
+              )}
+              {value && (
+                <div>
+                  <dt class="text-xs tracking-[0.15em] uppercase text-gold mb-2">Project Status</dt>
+                  <dd class="text-cream">{value}</dd>
+                </div>
+              )}
+            </dl>
+
+            <div class="w-full h-px bg-gold/20 my-8"></div>
+
+            <!-- CTA -->
+            <div class="text-center">
+              <p class="text-sm text-cream/50 mb-6">
+                Interested in a similar project?
+              </p>
+              <a
+                href="/#contact"
+                class="block w-full bg-gold hover:bg-white text-charcoal font-medium
+                       py-4 px-6 tracking-wider uppercase text-sm transition-all duration-300 text-center"
+              >
+                Get a Free Quote
+              </a>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Related Projects -->
+      {relatedProjects.length > 0 && (
+        <div class="mt-20 pt-20 border-t border-charcoal/10">
+          <h2 class="font-display text-3xl text-charcoal mb-12">Related Projects</h2>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {relatedProjects.map((related) => (
+              <a
+                href={`/projects/${related.slug}`}
+                class="group block bg-charcoal overflow-hidden border border-gold/10 hover:border-gold/40 transition-all duration-500"
+              >
+                <div class="aspect-[4/3] overflow-hidden">
+                  <img
+                    src={related.data.image}
+                    alt={related.data.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="p-6">
+                  <span class="text-xs tracking-wider uppercase text-gold">{related.data.category}</span>
+                  <h3 class="font-display text-lg text-white group-hover:text-gold transition-colors mt-2">
+                    {related.data.title}
+                  </h3>
+                  <p class="text-sm text-cream/50 mt-2">{related.data.location}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- Back to Projects -->
+      <div class="mt-16 text-center">
+        <a
+          href="/projects"
+          class="group inline-flex items-center gap-3 text-charcoal hover:text-gold font-medium tracking-wider transition-colors"
+        >
+          <svg class="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+          </svg>
+          Back to All Projects
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>

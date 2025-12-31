@@ -1,0 +1,115 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const allProjects = await getCollection('projects');
+
+// Sort by completion date (newest first)
+const projects = allProjects.sort((a, b) =>
+  b.data.completionDate.localeCompare(a.data.completionDate)
+);
+
+const title = 'Our Projects';
+const description = 'Explore our portfolio of construction projects across the United Kingdom. Commercial buildings, residential developments, fit-outs, refurbishments, loft conversions, and extensions.';
+---
+
+<BaseLayout title={title} description={description}>
+  <Header slot="header" currentPath="/projects" />
+
+  <!-- Page Header -->
+  <section class="relative bg-charcoal py-20 lg:py-28 overflow-hidden">
+    <!-- Decorative Elements -->
+    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent"></div>
+    <div class="absolute top-20 right-0 w-72 h-72 bg-gold/5 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-20 left-0 w-64 h-64 bg-gold/3 rounded-full blur-3xl"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="inline-block text-xs tracking-[0.3em] uppercase text-gold mb-4 animate-fade-in">Portfolio</span>
+      <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl text-white mb-6" style="animation: fadeInUp 0.8s ease-out 0.1s both;">
+        Our Projects
+      </h1>
+      <div class="w-16 h-px bg-gold mx-auto mb-6" style="animation: fadeInUp 0.8s ease-out 0.2s both;"></div>
+      <p class="text-lg text-cream/60 max-w-2xl mx-auto leading-relaxed" style="animation: fadeInUp 0.8s ease-out 0.3s both;">
+        A showcase of our construction work across the United Kingdom.
+        Each project demonstrates our commitment to quality and exceptional craftsmanship.
+      </p>
+    </div>
+  </section>
+
+  <!-- Projects Grid -->
+  <section class="relative py-20 lg:py-28 bg-black overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-5">
+      <div class="absolute inset-0" style="background-image: linear-gradient(90deg, #C9A962 1px, transparent 1px), linear-gradient(#C9A962 1px, transparent 1px); background-size: 60px 60px;"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 lg:mb-20" style="animation: fadeInUp 0.8s ease-out 0.4s both;">
+        <div class="bg-charcoal border border-gold/20 p-6 text-center hover:border-gold/40 transition-colors duration-300">
+          <span class="block font-display text-4xl text-gold">{projects.length}</span>
+          <span class="text-cream/50 text-xs tracking-wider uppercase mt-2 block">Projects</span>
+        </div>
+        <div class="bg-charcoal border border-gold/20 p-6 text-center hover:border-gold/40 transition-colors duration-300">
+          <span class="block font-display text-4xl text-gold">6</span>
+          <span class="text-cream/50 text-xs tracking-wider uppercase mt-2 block">Service Areas</span>
+        </div>
+        <div class="bg-charcoal border border-gold/20 p-6 text-center hover:border-gold/40 transition-colors duration-300">
+          <span class="block font-display text-4xl text-gold">100%</span>
+          <span class="text-cream/50 text-xs tracking-wider uppercase mt-2 block">Satisfaction</span>
+        </div>
+        <div class="bg-charcoal border border-gold/20 p-6 text-center hover:border-gold/40 transition-colors duration-300">
+          <span class="block font-display text-4xl text-gold">20+</span>
+          <span class="text-cream/50 text-xs tracking-wider uppercase mt-2 block">Years Experience</span>
+        </div>
+      </div>
+
+      <!-- Projects -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {projects.map((project, index) => (
+          <div style={`animation: fadeInUp 0.6s ease-out ${0.5 + index * 0.1}s both;`}>
+            <ProjectCard
+              title={project.data.title}
+              description={project.data.description}
+              category={project.data.category}
+              location={project.data.location}
+              image={project.data.image}
+              slug={project.slug}
+            />
+          </div>
+        ))}
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-20 bg-gradient-to-br from-charcoal to-black border border-gold/20 p-10 lg:p-14 text-center relative overflow-hidden" style="animation: fadeInUp 0.8s ease-out 1s both;">
+        <!-- Corner Accents -->
+        <div class="absolute top-0 left-0 w-12 h-12 border-t border-l border-gold/40"></div>
+        <div class="absolute bottom-0 right-0 w-12 h-12 border-b border-r border-gold/40"></div>
+
+        <h2 class="font-display text-3xl text-white mb-4">
+          Ready to Start Your Project?
+        </h2>
+        <p class="text-cream/60 max-w-xl mx-auto mb-8 leading-relaxed">
+          Whether you're planning a commercial development, home extension, or refurbishment,
+          we'd love to discuss how we can bring your vision to life.
+        </p>
+        <a
+          href="/#contact"
+          class="group inline-flex items-center justify-center gap-3 bg-gold hover:bg-white
+                 text-charcoal font-medium px-10 py-4 tracking-wider uppercase text-sm
+                 transition-all duration-500"
+        >
+          Get a Free Quote
+          <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
