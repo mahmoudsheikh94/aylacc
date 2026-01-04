@@ -1,8 +1,8 @@
 ---
-title: "Ali's Conservatory"
+title: "Conservatory in Hayes"
 description: "A stunning conservatory extension bringing natural light and additional living space to this family home."
 category: "Extensions"
-location: "London, UK"
+location: "Hayes, UK"
 completionDate: "2024"
 featured: true
 image: "/projects/alis-conservatory/finished.JPG"
