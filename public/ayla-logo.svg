@@ -1,0 +1,17 @@
+<svg viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Geometric maze pattern at top -->
+  <path d="M60 10 L50 20 L50 30 L60 30 L60 20 L70 20 L70 30 L60 30 L60 40 L70 40 L70 30 L80 30 L80 20 L70 20 L60 10 Z" fill="#3F6FA6"/>
+  <path d="M50 20 L40 30 L40 40 L50 40 L50 30 L50 20 Z" fill="#1F4E79"/>
+  <path d="M70 20 L80 30 L80 40 L70 40 L70 30 L70 20 Z" fill="#1F4E79"/>
+
+  <!-- Left arch -->
+  <path d="M20 130 L20 60 Q20 40 40 40 L50 40 L50 130" stroke="#1F4E79" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M28 130 L28 60 Q28 48 40 48 L50 48 L50 130" stroke="#3F6FA6" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- Right arch -->
+  <path d="M100 130 L100 60 Q100 40 80 40 L70 40 L70 130" stroke="#1F4E79" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M92 130 L92 60 Q92 48 80 48 L70 48 L70 130" stroke="#3F6FA6" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- Center connecting element -->
+  <rect x="54" y="50" width="12" height="4" fill="#8CB6DE" rx="1"/>
+</svg>
