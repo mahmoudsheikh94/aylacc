@@ -44,6 +44,32 @@ const projectSchema = {
   },
   datePublished: `${completionDate}-01-01`,
 };
+
+// Breadcrumb schema for better Google search appearance
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: 'https://aylacc.com',
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Projects',
+      item: 'https://aylacc.com/projects',
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: title,
+      item: `https://aylacc.com/projects/${project.slug}`,
+    },
+  ],
+};
 ---
 
 <BaseLayout
@@ -54,6 +80,7 @@ const projectSchema = {
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(projectSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   </Fragment>
 
   <Header slot="header" currentPath="/projects" />

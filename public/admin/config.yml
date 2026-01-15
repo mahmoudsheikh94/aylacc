@@ -59,7 +59,8 @@ collections:
         label: "Contact Information"
         file: "src/data/contact.json"
         fields:
-          - { label: "Phone", name: "phone", widget: "string" }
+          - { label: "Phone (T - Landline)", name: "phoneT", widget: "string" }
+          - { label: "Phone (M - Mobile)", name: "phoneM", widget: "string" }
           - { label: "Email", name: "email", widget: "string" }
           - { label: "Street Address", name: "streetAddress", widget: "string" }
           - { label: "City", name: "city", widget: "string" }
