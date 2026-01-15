@@ -1,72 +1,38 @@
-# Project Cards Redesign
+# Projects Page Redesign & Contact Info Update (January 2026)
 
 ## Problem
-Project cards have dark background (bg-black) with dark text (text-cream/50), making descriptions unreadable.
+1. The projects pages (`/projects` and `/projects/[slug]`) use old color scheme classes (`bg-charcoal`, `bg-black`, `text-gold`, `text-cream`) that don't exist in the current CSS design system, causing black backgrounds and invisible text.
+2. Contact information was placeholder/incorrect.
 
 ## Tasks
-- [x] Update ProjectCard.astro to use light theme with blue accents
-- [x] Add fancy hover animations
-- [x] Ensure text contrast is readable
-
----
+- [x] Analyze current projects page code and identify the issue
+- [x] Redesign `/projects/index.astro` with the current professional blue theme
+- [x] Redesign `/projects/[...slug].astro` with the current professional blue theme
+- [x] Update contact info in Footer.astro
+- [x] Update contact info in Contact.astro
+- [x] Update contact info in BaseLayout.astro (structured data)
+- [x] Push to main
 
 ## Review
 
-### Changes Made to ProjectCard.astro
+### Projects Page Redesign
+Changed all pages from old gold/charcoal/cream theme to professional blue theme:
 
-**Background & Structure:**
-- Changed from `bg-black` to `bg-white` with `rounded-lg` corners
-- Updated border from `border-cream/10` to `border-gray-200` with `hover:border-blue-900/40`
-- Added `shadow-sm` with `hover:shadow-xl` for depth
+**Color Changes:**
+- Header background: `bg-charcoal` → Blue gradient (#1F4E79 → #3F6FA6)
+- Accent text: `text-gold` → Accent blue (#8CB6DE)
+- Grid section: `bg-black` → Light gray gradient (#F9FAFB → #FFFFFF)
+- Stats cards: Dark charcoal → White with blue accents
+- Buttons: Gold → Blue gradient with shadow
+- Borders/accents: Gold → Blue tones
 
-**Hover Animations:**
-- Added lift effect: `hover:-translate-y-2`
-- Image zoom: `group-hover:scale-110` (increased from 105)
-- Top border accent slides in from left on hover
-- Expanding line in footer section
-- Arrow icon moves right on hover
+### Contact Info Updated
+- **Phone (T):** 020 8993 2414
+- **Phone (M):** 074 5666 4875
+- **Email:** malek@aylacc.com
+- **Address:** 181 Noel Road, London W3 0JJ
 
-**Text Readability:**
-- Title: `text-gray-900` (was `text-white`)
-- Description: `text-gray-600` (was `text-cream/50`) - now clearly visible
-- Location: `text-gray-500` (was `text-cream/50`)
-
-**Color Updates:**
-- Category badge: `bg-blue-900 text-white` (was gold)
-- Overlay: Blue gradient instead of black
-- All accents now use blue-900 palette
-
-**Removed:**
-- Corner accent decorations (cleaner look)
-- Black gradient background in content area
-
----
-
-# Text Updates (January 2026)
-
-## Tasks
-- [x] Update location from "London & South East" to "West and North West London"
-- [x] Update Malek's journey to show: Middle East -> USA -> UK
-- [x] Rename "Ali's Conservatory" to "Conservatory in Hayes"
-
----
-
-## Review
-
-### Location Updates
-Changed service area references across the site:
-- **Contact.astro** (line 220): "West & North West London" (removed Surrey, Kent, Essex, Hertfordshire)
-- **Footer.astro** (line 120): "West & North West London"
-- **About.astro** (line 106): "West and North West London"
-- **FAQ.astro** (line 5): Updated FAQ answer about service areas
-
-### Malek's Journey Timeline
-Updated About.astro to show full journey:
-- **2004**: "Ayla Construction established in the Middle East" (was Jordan)
-- **2015**: Added new entry "United States Expansion"
-- **2021**: UK Operations Begin (unchanged)
-- Updated story paragraph to mention Middle East -> USA -> UK progression
-
-### Project Rename
-- **alis-conservatory.md**: Changed title from "Ali's Conservatory" to "Conservatory in Hayes"
-- Updated location from "London, UK" to "Hayes, UK"
+Files updated:
+- `src/components/Footer.astro`
+- `src/components/Contact.astro`
+- `src/layouts/BaseLayout.astro` (structured data for SEO)
