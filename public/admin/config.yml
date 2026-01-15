@@ -1,0 +1,69 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Media files will be stored in the public folder
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  # Projects Collection
+  - name: "projects"
+    label: "Projects"
+    folder: "src/content/projects"
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - "Commercial Buildings"
+          - "Residential Buildings"
+          - "Fit-outs"
+          - "Refurbishments"
+          - "Loft Conversions"
+          - "Extensions"
+      - { label: "Location", name: "location", widget: "string" }
+      - { label: "Completion Date", name: "completionDate", widget: "string" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Main Image", name: "image", widget: "image" }
+      - { label: "Gallery Images", name: "gallery", widget: "list", field: { label: "Image", name: "image", widget: "image" }, required: false }
+      - { label: "Client", name: "client", widget: "string", required: false }
+      - { label: "Duration", name: "duration", widget: "string", required: false }
+      - { label: "Value", name: "value", widget: "string", required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  # FAQs Collection
+  - name: "faqs"
+    label: "FAQs"
+    folder: "src/content/faqs"
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: "Question", name: "question", widget: "string" }
+      - { label: "Answer", name: "answer", widget: "text" }
+      - { label: "Order", name: "order", widget: "number", default: 0 }
+
+  # Site Settings
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - name: "contact"
+        label: "Contact Information"
+        file: "src/data/contact.json"
+        fields:
+          - { label: "Phone", name: "phone", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Street Address", name: "streetAddress", widget: "string" }
+          - { label: "City", name: "city", widget: "string" }
+          - { label: "Postcode", name: "postcode", widget: "string" }
+          - { label: "Region", name: "region", widget: "string" }
+          - { label: "Business Hours Weekday", name: "hoursWeekday", widget: "string" }
+          - { label: "Business Hours Saturday", name: "hoursSaturday", widget: "string" }

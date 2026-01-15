@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import contact from '../data/contact.json';
 
 interface Props {
   title: string;
@@ -33,20 +34,20 @@ const organizationSchema = {
   description: 'Professional construction services in the United Kingdom. Commercial buildings, residential projects, fit-outs, refurbishments, loft conversions, and extensions.',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: '7 Penn Drive, Denham',
-    addressLocality: 'Uxbridge',
-    postalCode: 'UB9 5JP',
+    streetAddress: contact.streetAddress,
+    addressLocality: contact.city,
+    postalCode: contact.postcode,
     addressCountry: 'GB',
-    addressRegion: 'Buckinghamshire',
+    addressRegion: contact.region,
   },
   contactPoint: {
     '@type': 'ContactPoint',
-    telephone: '+44-7555-529922',
+    telephone: contact.phone.replace(/\s/g, ''),
     contactType: 'customer service',
     areaServed: 'GB',
     availableLanguage: ['English'],
   },
-  email: 'malek@aylacc.com',
+  email: contact.email,
   sameAs: [
     // PLACEHOLDER: Add social media URLs
   ],
@@ -130,5 +131,19 @@ const organizationSchema = {
     </main>
 
     <slot name="footer" />
+
+    <!-- Netlify Identity Widget (for CMS login redirects) -->
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </body>
 </html>

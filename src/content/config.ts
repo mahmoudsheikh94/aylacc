@@ -24,6 +24,16 @@ const projects = defineCollection({
   }),
 });
 
+const faqs = defineCollection({
+  type: 'content',
+  schema: z.object({
+    question: z.string(),
+    answer: z.string(),
+    order: z.number().default(0),
+  }),
+});
+
 export const collections = {
   projects,
+  faqs,
 };

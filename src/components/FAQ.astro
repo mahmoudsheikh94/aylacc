@@ -1,26 +1,13 @@
 ---
-const faqs = [
-  {
-    question: "What areas do you cover in the UK?",
-    answer: "We primarily serve West and North West London. For larger commercial projects, we can operate throughout the United Kingdom. Contact us to discuss your specific location."
-  },
-  {
-    question: "How do I get a quote for my construction project?",
-    answer: "Getting a quote is simple. Fill out our contact form or call us directly. We'll arrange a site visit to understand your requirements, then provide a detailed, no-obligation quote within 5 working days. Our quotes are comprehensive with no hidden costs."
-  },
-  {
-    question: "Are you fully insured?",
-    answer: "Yes, Ayla Construction LTD carries comprehensive public liability insurance, employer's liability insurance, and professional indemnity insurance. We're happy to provide certificates of insurance upon request for your peace of mind."
-  },
-  {
-    question: "How long does a typical construction project take?",
-    answer: "Project timelines vary depending on scope and complexity. A loft conversion typically takes 8-12 weeks, while a full refurbishment might take 4-6 months. During our initial consultation, we'll provide a realistic timeline specific to your project."
-  },
-  {
-    question: "Do you handle planning permissions and building regulations?",
-    answer: "Yes, we offer a full service including planning applications and building regulations submissions. Our team has extensive experience navigating UK planning requirements and will guide you through the entire process from start to finish."
-  },
-];
+import { getCollection } from 'astro:content';
+
+const faqEntries = await getCollection('faqs');
+const faqs = faqEntries
+  .sort((a, b) => a.data.order - b.data.order)
+  .map(entry => ({
+    question: entry.data.question,
+    answer: entry.data.answer,
+  }));
 
 // FAQ Schema for SEO
 const faqSchema = {

@@ -1,5 +1,6 @@
 ---
 import { services } from '../data/services';
+import contact from '../data/contact.json';
 
 const serviceOptions = services.map(s => s.title);
 ---
@@ -183,7 +184,7 @@ const serviceOptions = services.map(s => s.title);
                 </div>
                 <div class="pt-2">
                   <p class="text-xs tracking-[0.15em] uppercase text-white/70 mb-2">Phone</p>
-                  <a href="tel:+447555529922" class="text-white/90 hover:text-white transition-colors block">+44 7555 529922</a>
+                  <a href={`tel:${contact.phone.replace(/\s/g, '')}`} class="text-white/90 hover:text-white transition-colors block">{contact.phone}</a>
                 </div>
               </div>
 
@@ -196,8 +197,8 @@ const serviceOptions = services.map(s => s.title);
                 </div>
                 <div class="pt-2">
                   <p class="text-xs tracking-[0.15em] uppercase text-white/70 mb-2">Email</p>
-                  <a href="mailto:malek@aylacc.com" class="text-white/90 hover:text-white transition-colors">
-                    malek@aylacc.com
+                  <a href={`mailto:${contact.email}`} class="text-white/90 hover:text-white transition-colors">
+                    {contact.email}
                   </a>
                 </div>
               </div>
@@ -213,7 +214,7 @@ const serviceOptions = services.map(s => s.title);
                 <div class="pt-2">
                   <p class="text-xs tracking-[0.15em] uppercase text-white/70 mb-2">Address</p>
                   <p class="text-white/90">
-                    7 Penn Drive, Denham<br />Uxbridge UB9 5JP
+                    {contact.streetAddress}<br />{contact.city} {contact.postcode}
                   </p>
                 </div>
               </div>
@@ -228,8 +229,8 @@ const serviceOptions = services.map(s => s.title);
                 <div class="pt-2">
                   <p class="text-xs tracking-[0.15em] uppercase text-white/70 mb-2">Business Hours</p>
                   <p class="text-white/90">
-                    Monday - Friday: 8am - 6pm<br />
-                    <span class="text-white/60">Saturday: 9am - 2pm</span>
+                    {contact.hoursWeekday}<br />
+                    <span class="text-white/60">{contact.hoursSaturday}</span>
                   </p>
                 </div>
               </div>
