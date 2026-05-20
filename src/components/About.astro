@@ -72,10 +72,10 @@ const valueIcons: Record<string, string> = {
       </p>
     </div>
 
+    <!-- Row 1: Malek + Timeline -->
     <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-      <!-- Founder Story -->
+      <!-- Malek Sheikh El Ard -->
       <div class="relative">
-        <!-- Founder Photo -->
         <div class="relative mb-10 group">
           <div class="aspect-[4/5] overflow-hidden rounded-xl shadow-lg border-2 border-gray-200 group-hover:border-primary transition-all duration-300">
             <img
@@ -85,19 +85,14 @@ const valueIcons: Record<string, string> = {
               loading="lazy"
             />
           </div>
-
-          <!-- Experience Badge -->
           <div class="absolute -bottom-6 -right-6 lg:-right-10 bg-gradient-to-br from-secondary to-primary text-white px-6 py-4 rounded-lg shadow-xl">
             <span class="block text-3xl font-display font-bold">20+</span>
             <span class="text-xs tracking-wide uppercase font-semibold">Years</span>
           </div>
         </div>
-
-        <!-- Content -->
         <div class="mt-12">
-          <h3 class="heading-md mb-6">
-            A Legacy of Quality Construction
-          </h3>
+          <h3 class="heading-md mb-2">Malek Sheikh El Ard</h3>
+          <p class="text-secondary font-semibold mb-6">CEO & Founder</p>
           <div class="space-y-5 text-text-gray leading-relaxed">
             <p>
               Ayla Construction was founded by Malek Sheikh El Ard, a Civil Engineer who graduated
@@ -116,58 +111,91 @@ const valueIcons: Record<string, string> = {
         </div>
       </div>
 
-      <!-- Timeline & Values -->
-      <div class="space-y-12 lg:space-y-16">
-        <!-- Timeline -->
-        <div>
-          <h3 class="text-eyebrow mb-8">Our Journey</h3>
-          <div class="relative">
-            <!-- Timeline Line -->
-            <div class="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-secondary to-transparent"></div>
-
-            <div class="space-y-8">
-              {timeline.map((item, index) => (
-                <div class="relative pl-16 group">
-                  <!-- Year Circle -->
-                  <div class="absolute left-0 top-0 w-12 h-12 bg-white border-2 border-accent rounded-lg flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all duration-300">
-                    <span class="text-primary group-hover:text-white text-xs font-bold transition-colors duration-300">{item.year}</span>
-                  </div>
-
-                  <div class="pt-2">
-                    <h4 class="font-display text-lg font-semibold text-primary mb-2">{item.title}</h4>
-                    <p class="text-text-gray text-sm leading-relaxed">{item.description}</p>
-                  </div>
+      <!-- Timeline -->
+      <div>
+        <h3 class="text-eyebrow mb-8">Our Journey</h3>
+        <div class="relative">
+          <div class="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-secondary to-transparent"></div>
+          <div class="space-y-8">
+            {timeline.map((item, index) => (
+              <div class="relative pl-16 group">
+                <div class="absolute left-0 top-0 w-12 h-12 bg-white border-2 border-accent rounded-lg flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all duration-300">
+                  <span class="text-primary group-hover:text-white text-xs font-bold transition-colors duration-300">{item.year}</span>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <!-- Values -->
-        <div>
-          <h3 class="text-eyebrow mb-8">Our Values</h3>
-          <div class="space-y-4">
-            {values.map((value, index) => (
-              <div
-                class="group flex gap-4 p-6 card-professional hover:shadow-lg"
-              >
-                <div class="w-12 h-12 bg-accent-light border-2 border-accent rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
-                  <svg
-                    class="w-5 h-5 text-primary group-hover:text-white transition-colors duration-300"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    set:html={valueIcons[value.icon]}
-                  />
-                </div>
-                <div>
-                  <h4 class="font-display text-primary text-lg font-semibold mb-1">{value.title}</h4>
-                  <p class="text-text-gray text-sm leading-relaxed">{value.description}</p>
+                <div class="pt-2">
+                  <h4 class="font-display text-lg font-semibold text-primary mb-2">{item.title}</h4>
+                  <p class="text-text-gray text-sm leading-relaxed">{item.description}</p>
                 </div>
               </div>
             ))}
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Mike + Values -->
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start mt-16 lg:mt-20">
+      <!-- Mike Hickey -->
+      <div class="relative">
+        <div class="relative mb-10 group">
+          <div class="aspect-[4/5] overflow-hidden rounded-xl shadow-lg border-2 border-gray-200 group-hover:border-primary transition-all duration-300">
+            <img
+              src="/mike-hickey.jpg"
+              alt="Mike Hickey - Construction Director at Ayla Construction LTD"
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+          <div class="absolute -bottom-6 -right-6 lg:-right-10 bg-gradient-to-br from-secondary to-primary text-white px-6 py-4 rounded-lg shadow-xl">
+            <span class="block text-3xl font-display font-bold">30+</span>
+            <span class="text-xs tracking-wide uppercase font-semibold">Years</span>
+          </div>
+        </div>
+        <div class="mt-12">
+          <h3 class="heading-md mb-2">Mike Hickey — BSc(Hons)</h3>
+          <p class="text-secondary font-semibold mb-6">Construction Director</p>
+          <div class="space-y-5 text-text-gray leading-relaxed">
+            <p>
+              Mike has worked in the construction industry for over 30 years and takes great pride in every project
+              he undertakes. After starting a groundworks company with his dad, he progressed academically, earning
+              a degree in construction management.
+            </p>
+            <p>
+              Over the course of his career, Mike has gained hands‑on experience across all areas of construction,
+              from manual labour through to senior management, giving him a deep, practical understanding of the industry.
+            </p>
+            <p>
+              His portfolio includes projects ranging from £100,000 to £20,000,000, demonstrating his capability
+              in delivering work at both modest and substantial scales.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Values -->
+      <div>
+        <h3 class="text-eyebrow mb-8">Our Values</h3>
+        <div class="space-y-4">
+          {values.map((value, index) => (
+            <div
+              class="group flex gap-4 p-6 card-professional hover:shadow-lg"
+            >
+              <div class="w-12 h-12 bg-accent-light border-2 border-accent rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
+                <svg
+                  class="w-5 h-5 text-primary group-hover:text-white transition-colors duration-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  set:html={valueIcons[value.icon]}
+                />
+              </div>
+              <div>
+                <h4 class="font-display text-primary text-lg font-semibold mb-1">{value.title}</h4>
+                <p class="text-text-gray text-sm leading-relaxed">{value.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

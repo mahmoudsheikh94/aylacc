@@ -198,9 +198,8 @@ const serviceOptions = services.map(s => s.title);
                 </div>
                 <div class="pt-2">
                   <p class="text-xs tracking-[0.15em] uppercase text-white/70 mb-2">Email</p>
-                  <a href={`mailto:${contact.email}`} class="text-white/90 hover:text-white transition-colors">
-                    {contact.email}
-                  </a>
+                  <a href={`mailto:${contact.emailInfo}`} class="text-white/90 hover:text-white transition-colors block">{contact.emailInfo}</a>
+                  <a href={`mailto:${contact.email}`} class="text-white/90 hover:text-white transition-colors block">{contact.email}</a>
                 </div>
               </div>
 
